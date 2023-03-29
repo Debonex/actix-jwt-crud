@@ -12,7 +12,8 @@ pub enum ServerError {
     UserNotFound,
     UserPasswordError,
     UserLogoutFailed,
-    DbError
+    DbError,
+    RedisError
 }
 
 impl ResponseError for ServerError {

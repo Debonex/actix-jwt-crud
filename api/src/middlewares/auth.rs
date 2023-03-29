@@ -70,19 +70,17 @@ where
                 if let Ok(token_data) = decode_token(token) {
                     let redis_client = req
                         .app_data::<web::Data<Client>>()
-                        .ok_or(ServerError::InternalError)?;
-                    let current_token = get_token(redis_client, token_data.claims.user_id).await;
-                    if let Ok(current_token) = current_token {
-                        if current_token.eq(token) {
-                            let mut extensions = req.extensions_mut();
-                            extensions.insert(token_data.claims);
-                            auth_pass = true;
-                        }
-                        if !auth_pass {
-                            return ServerError::AuthExpired.into();
-                        }
-                    } else {
-                        return ServerError::InternalError.into();
+                        .ok_or(ServerError::RedisError)?;
+                    let current_token = get_token(redis_client, token_data.claims.user_id)
+                        .await
+                        .map_err(|_| ServerError::RedisError)?;
+                    if current_token.eq(token) {
+                        let mut extensions = req.extensions_mut();
+                        extensions.insert(token_data.claims);
+                        auth_pass = true;
+                    }
+                    if !auth_pass {
+                        return ServerError::AuthExpired.into();
                     }
                 }
             }
