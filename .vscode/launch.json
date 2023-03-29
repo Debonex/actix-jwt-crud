@@ -1,0 +1,15 @@
+{
+  "version": "0.1.0",
+  "configurations": [
+    {
+      "name": "Debug Service",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "${workspaceRoot}/target/debug/api",
+      "args": [],
+      "cwd": "${workspaceRoot}",
+      "externalConsole": true,
+      "preLaunchTask": "rust: cargo build"
+    }
+  ]
+}

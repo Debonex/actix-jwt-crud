@@ -31,6 +31,7 @@ async fn main() -> Result<(), std::io::Error> {
             .app_data(redis.clone())
             .wrap(actix_web::middleware::Logger::new("%r %t %s %Dms"))
             .service(handlers::health_checker)
+            .service(web::scope("/user").configure(handlers::user::config))
     })
     .bind(("127.0.0.1", port))?
     .run()

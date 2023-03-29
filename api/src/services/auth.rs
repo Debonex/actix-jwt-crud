@@ -20,6 +20,11 @@ pub async fn get_token(client: &Client, user_id: i32) -> redis::RedisResult<Stri
     con.get(user_id).await
 }
 
+pub async fn del_token(client: &Client, user_id: i32) -> redis::RedisResult<()> {
+    let mut con = client.get_async_connection().await?;
+    con.del(user_id).await
+}
+
 pub fn generate_token(claims: &TokenClaims) -> jsonwebtoken::errors::Result<String> {
     jsonwebtoken::encode(
         &Header::default(),
