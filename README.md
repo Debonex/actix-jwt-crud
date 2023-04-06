@@ -12,6 +12,8 @@ A demo repo for JWT authorization and simple CRUD with `Actix-web@4`, `sea-orm`,
 
 ## API
 
+A postman workspace for quick test. [https://www.postman.com/martian-robot-631196/workspace/actix-jwt-crud](https://www.postman.com/martian-robot-631196/workspace/actix-jwt-crud)
+
 #### `GET /`
 
 Health checker
