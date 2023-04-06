@@ -73,7 +73,7 @@ where
                         .ok_or(ServerError::RedisError)?;
                     let current_token = get_token(redis_client, token_data.claims.user_id)
                         .await
-                        .map_err(|_| ServerError::RedisError)?;
+                        .map_err(|_| ServerError::AuthInvalid)?;
                     if current_token.eq(token) {
                         let mut extensions = req.extensions_mut();
                         extensions.insert(token_data.claims);

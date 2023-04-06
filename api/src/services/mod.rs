@@ -1,2 +1,2 @@
-pub mod conn;
 pub mod auth;
+pub mod conn;

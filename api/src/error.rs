@@ -13,7 +13,7 @@ pub enum ServerError {
     UserPasswordError,
     UserLogoutFailed,
     DbError,
-    RedisError
+    RedisError,
 }
 
 impl ResponseError for ServerError {
@@ -28,6 +28,7 @@ impl ResponseError for ServerError {
         match self {
             ServerError::AuthExpired | ServerError::AuthInvalid => StatusCode::UNAUTHORIZED,
             ServerError::UserNameUsed => StatusCode::CONFLICT,
+            ServerError::UserNotFound | ServerError::UserPasswordError => StatusCode::FORBIDDEN,
             _ => StatusCode::INTERNAL_SERVER_ERROR,
         }
     }
